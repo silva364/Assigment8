@@ -47,6 +47,7 @@ jobs:
                any::htmlwidgets
                any::tidyverse
                any::ggmap
+               any::tidycensus
              
       - name: Render document
         uses: quarto-dev/quarto-actions/render@v2
