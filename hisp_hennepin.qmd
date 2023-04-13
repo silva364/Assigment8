@@ -31,6 +31,7 @@ library(tidycensus)
 library(ggthemes)
 library(viridis)
 library(RColorBrewer)
+library(htmlwidgets)
 
 
 #Working directory for .RMD
@@ -64,10 +65,11 @@ options(digits = 4)
 options(dplyr.summarise.inform = FALSE)
 ```
 
-You can add options to executable code like this
+Proportion of hispanics in Hennepin County
 
 ```{r}
-
+#| message: false
+#| warning: false
 
 ## Getting a Hennepin Box
 hn.box <- osmdata::getbb("hennepin")
@@ -113,10 +115,18 @@ race.gg <- ggplot() +
 plotly <- ggplotly(race.gg,
          tooltip = "text",
          height  = 600,
-         width   = 800) %>%
-    style(hoveron = "fills")
+         width   = 800,
+         full_html = FALSE) %>%
+    style(hoveron = "fills") %>%
+  config(loadingMode = "static")
 
-print(plotly)
+widgy <- as_widget(plotly)
+saveWidget(widgy, "my_plotly_graph.html")
+
+
+
+  knitr::include_graphics("C:\\Users\\lglea\\OneDrive\\Documents\\UMn MPH\\Courses\\3rd Semester\\Biostat II - PUBH6451\\BiostatsPUBH6451\\Assigment8\\my_plotly_graph.html", dpi = 500)
+
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+
