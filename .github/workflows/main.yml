@@ -44,6 +44,7 @@ jobs:
                any::ggthemes
                any::viridis
                any::RColorBrewer
+               any::htmlwidgets
              
       - name: Render document
         uses: quarto-dev/quarto-actions/render@v2
