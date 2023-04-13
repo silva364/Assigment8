@@ -1,0 +1,122 @@
+---
+title: "Map!"
+format: html
+editor: visual
+---
+
+## Hennepin Map
+
+This is a Hennepin Map with percentage of Hispanic people by census tract
+
+```{r}
+#| echo: false
+#| warning: false
+
+
+## Prologue
+
+
+census_key <- Sys.getenv("tt")
+
+library(tidyverse)
+library(lubridate)
+library(gt)
+library(paletteer)
+library(plotly)
+library(flexdashboard)
+library(leaflet)
+library(osmdata)
+library(ggmap)
+library(tidycensus)
+library(ggthemes)
+library(viridis)
+library(RColorBrewer)
+
+
+#Working directory for .RMD
+knitr::opts_knit$set(echo = TRUE,
+                     root.dir = rprojroot::find_rstudio_root_file())
+
+#Controlling figure output in markdown
+knitr::opts_chunk$set(
+#  fig.height =   
+  fig.width = 6,
+#  fig.asp = .5,
+  out.width = "90%",
+#  out.height = 
+ fig.align  = "center",
+  cache = FALSE,
+  eval  = TRUE,
+  echo  = FALSE,
+  warning = FALSE
+)
+
+#My Colours (from viridis)
+my_purple <- "#440154FF"
+my_yellow <- "#FDE725FF"
+
+#Set Theme for ggplot2
+theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom"))
+
+#Set Scientific notation output and decimal places for knitr
+options(scipen = 999)
+options(digits = 4)
+options(dplyr.summarise.inform = FALSE)
+```
+
+You can add options to executable code like this
+
+```{r}
+
+
+## Getting a Hennepin Box
+hn.box <- osmdata::getbb("hennepin")
+
+## Getting a base map
+hennepin.base.map <- get_map(
+                       location = hn.box,
+                       source   = "stamen",
+                       maptype  = "terrain-background",
+                       crop = TRUE
+                      )
+
+
+
+census_api_key(census_key, overwrite =TRUE)
+
+hennepin.df <- get_acs(
+  geography = "tract",
+  variables = "B03003_001E", 
+  state     = "MN",
+  county    = "Hennepin",
+  year      = 2020,
+  geometry  = TRUE,
+  cb        = FALSE
+)
+
+## Regular ggplot
+race.gg <- ggplot() +
+  geom_sf(data = hennepin.df, 
+          aes(fill = estimate),
+          colour = "black", size = 0.1) + 
+  labs(title = "Hennepin County, Race distribution") + 
+  scale_fill_viridis_c("Hispanic Origin") +
+  theme_map() +
+  theme(
+    plot.title   = element_text(size  = 16,
+                                hjust = 0.5),
+    legend.text  = element_text(size = 16),
+    legend.title = element_text(size = 16),
+    legend.position = "right"
+  )
+
+plotly <- ggplotly(race.gg,
+         tooltip = "text",
+         height  = 600,
+         width   = 800) %>%
+    style(hoveron = "fills")
+
+print(plotly)
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
