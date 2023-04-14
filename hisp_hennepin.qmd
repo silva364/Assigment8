@@ -125,7 +125,7 @@ saveWidget(widgy, "my_plotly_graph.html")
 
 
 
-  knitr::include_graphics("C:\\Users\\lglea\\OneDrive\\Documents\\UMn MPH\\Courses\\3rd Semester\\Biostat II - PUBH6451\\BiostatsPUBH6451\\Assigment8\\my_plotly_graph.html", dpi = 500)
+  knitr::include_graphics("my_plotly_graph.html", dpi = 500)
 
 ```
 
