@@ -50,6 +50,7 @@ jobs:
             any::osmdata
             any::purrr
             any::htmltools
+            any::flexdashboard
              
       - name: Render document
         uses: quarto-dev/quarto-actions/render@v2
