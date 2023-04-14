@@ -46,41 +46,10 @@ jobs:
             any::tidyverse
             any::ggmap
             any::tidycensus
-            any::Rcpp
-            any::pillar
-            any::compiler
-            any::tools
-            any::digest
-            any::jsonlite
-            any::lifecycle
-            any::tibble
-            any::gtable
-            any::viridisLite
-            any::pkgconfig
-            any::rlang
-            any::cli
-            any::rstudioapi
-            any::xfun
-            any::fastmap
-            any::httr
-            any::generics
-            any::vctrs
             any::rprojroot
-            any::grid
-            any::tidyselect
-            any::glue
-            any::data.table
-            any::R6
-            any::fansi
             any::osmdata
             any::purrr
-            any::magrittr
-            any::scales
             any::htmltools
-            any::colorspace
-            any::utf8
-            any::lazyeva
-            any::munsell
              
       - name: Render document
         uses: quarto-dev/quarto-actions/render@v2
